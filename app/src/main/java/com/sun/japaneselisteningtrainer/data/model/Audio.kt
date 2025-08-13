@@ -11,7 +11,8 @@ data class Audio(
     val isSuspended: Boolean = false,
     val isFavorite: Boolean = false,
     val listenTimes: Int = 0,
-    val createdAt: String = ""
+    val createdAt: String = "",
+    val audioUri: String = ""
 ) {
     constructor(id: Int, title: String) : this(id,
         title,
