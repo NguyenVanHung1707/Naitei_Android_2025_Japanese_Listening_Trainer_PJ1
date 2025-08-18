@@ -1,6 +1,5 @@
 package com.sun.japaneselisteningtrainer.data.model
 
-
 data class Audio(
     val id: Int = 0,
     val title: String = "",
