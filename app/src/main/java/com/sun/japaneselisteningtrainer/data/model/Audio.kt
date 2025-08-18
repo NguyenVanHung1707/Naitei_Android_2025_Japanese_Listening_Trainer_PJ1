@@ -12,7 +12,7 @@ data class Audio(
     val isFavorite: Boolean = false,
     val listenTimes: Int = 0,
     val createdAt: String = "",
-    val audioUri: String = ""
+    val imageUri: String? = null,
 ) {
     constructor(id: Int, title: String) : this(id,
         title,

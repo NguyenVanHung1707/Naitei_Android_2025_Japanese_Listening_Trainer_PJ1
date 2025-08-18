@@ -23,7 +23,6 @@ import com.sun.japaneselisteningtrainer.R
 import com.sun.japaneselisteningtrainer.ui.AppViewModelProvider
 import com.sun.japaneselisteningtrainer.ui.navigation.NavigationDestination
 
-
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.home_title
@@ -47,27 +46,43 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Filter", color = Color.White)
+                        Text(
+                            text = "Filter",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                         Button(
-                            onClick = { /* Relax Mode logic */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE05C7D))
+                            onClick = { },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary
+                            )
                         ) {
-                            Text("Relax Mode")
+                            Text(
+                                text = "Relax Mode",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSecondary
+                            )
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF0A1826))
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = navigateToAudioEntry,
-                containerColor = Color(0xFF6742F1)
+                containerColor = MaterialTheme.colorScheme.tertiary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add",
+                    tint = MaterialTheme.colorScheme.onTertiary
+                )
             }
         },
-        containerColor = Color(0xFF0A1826)
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues,
@@ -77,24 +92,30 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             items(homeUiState.audioList) { audio ->
-                AudioListItem(title = audio.title)
+                AudioListItem(
+                    title = audio.title,
+                    imageRes = R.drawable.logo
+                )
             }
         }
     }
 }
 
 @Composable
-fun AudioListItem(title: String) {
+fun AudioListItem(
+    title: String,
+    imageRes: Int
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF15414F))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Logo Icon",
+            painter = painterResource(id = imageRes),
+            contentDescription = "Audio Logo",
             modifier = Modifier
                 .size(48.dp)
                 .padding(end = 12.dp),
@@ -103,7 +124,7 @@ fun AudioListItem(title: String) {
 
         Text(
             text = title,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier.weight(1f)
         )
 
