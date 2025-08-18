@@ -72,18 +72,6 @@ fun HomeScreen(
                 )
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = navigateToAudioEntry,
-                containerColor = MaterialTheme.colorScheme.tertiary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
-                    tint = MaterialTheme.colorScheme.onTertiary
-                )
-            }
-        },
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             Column {
