@@ -31,6 +31,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sun.japaneselisteningtrainer.R
 import com.sun.japaneselisteningtrainer.ui.AppViewModelProvider
+import com.sun.japaneselisteningtrainer.ui.folder.components.FolderPicker
 import com.sun.japaneselisteningtrainer.ui.navigation.NavigationDestination
 
 object HomeDestination : NavigationDestination {
@@ -50,7 +54,6 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToAudioEntry: () -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navigationBar: @Composable () -> Unit
@@ -106,9 +109,48 @@ fun HomeScreen(
                 )
             }
         }
-
     }
 }
+
+@Composable
+fun AudioCard(
+    title: String,
+    imageRes: Int,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(12.dp)
+            .clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = "Audio Logo",
+            modifier = Modifier
+                .size(48.dp)
+                .padding(end = 12.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Text(
+            text = title,
+            color = Color.Black,
+            modifier = Modifier.weight(1f),
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Icon(
+            imageVector = Icons.Default.FavoriteBorder,
+            contentDescription = "Favorite",
+            tint = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
 fun MiniAudioPlayer(
     audioTitle: String,
     isPlaying: Boolean,
@@ -128,7 +170,6 @@ fun MiniAudioPlayer(
             text = audioTitle,
             color = Color.Black,
             modifier = Modifier.weight(1f)
-
         )
 
         IconButton(onClick = onPrevious) {
