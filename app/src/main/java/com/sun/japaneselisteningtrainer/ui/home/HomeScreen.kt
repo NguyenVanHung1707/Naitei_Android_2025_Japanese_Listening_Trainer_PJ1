@@ -106,48 +106,9 @@ fun HomeScreen(
                 )
             }
         }
+
     }
 }
-
-@Composable
-fun AudioCard(
-    title: String,
-    imageRes: Int,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .padding(12.dp)
-            .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = "Audio Logo",
-            modifier = Modifier
-                .size(48.dp)
-                .padding(end = 12.dp),
-            contentScale = ContentScale.Crop
-        )
-
-        Text(
-            text = title,
-            color = Color.Black,
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        Icon(
-            imageVector = Icons.Default.FavoriteBorder,
-            contentDescription = "Favorite",
-            tint = MaterialTheme.colorScheme.primary
-        )
-    }
-}
-
-@Composable
 fun MiniAudioPlayer(
     audioTitle: String,
     isPlaying: Boolean,
@@ -167,6 +128,7 @@ fun MiniAudioPlayer(
             text = audioTitle,
             color = Color.Black,
             modifier = Modifier.weight(1f)
+
         )
 
         IconButton(onClick = onPrevious) {
