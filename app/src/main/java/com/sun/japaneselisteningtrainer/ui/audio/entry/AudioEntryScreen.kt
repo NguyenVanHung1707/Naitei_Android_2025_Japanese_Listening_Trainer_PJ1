@@ -21,8 +21,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sun.japaneselisteningtrainer.R
 import com.sun.japaneselisteningtrainer.ui.AppViewModelProvider
+import com.sun.japaneselisteningtrainer.ui.folder.components.FolderPicker
 import com.sun.japaneselisteningtrainer.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
@@ -49,6 +49,9 @@ fun AudioEntryScreen(
     val coroutineScope = rememberCoroutineScope()
     val uiState = audioEntryViewModel.uiState
     val audioForm = uiState.audioForm
+
+    var openDialog by remember { mutableStateOf(false) }
+    var selectedFolder by remember { mutableStateOf("") }
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -123,6 +126,24 @@ fun AudioEntryScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            Button(onClick = { openDialog = true }) {
+                Text("Open Folder Picker")
+            }
+            Text("Selected Folder: $selectedFolder")
+
+            if (openDialog) {
+                FolderPicker(
+                    onFolderSelected = {
+                        selectedFolder = it.name
+                        audioEntryViewModel.updateForm(audioForm.copy(folderId = it.id))
+                        openDialog = false
+                    },
+                    onDismiss = { openDialog = false }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
             Button(
                 onClick = {
                     coroutineScope.launch {
@@ -176,4 +197,3 @@ fun UploadField(
         }
     }
 }
-
